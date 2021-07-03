@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 # Credit all goes to Pi Hole installation script https://github.com/pi-hole/pi-hole
 
-# netControl: A black hole for Internet advertisements
-# (c) 2021 netControl, LLC (https://pi-hole.net)
-# Network-wide ad blocking via your own hardware.
+# netControl: control your home internet access (Parental Control)
+# (c) 2021 netControl, LLC (https://github.com/mrahmadt/netControl)
 #
 # Installs netControl
 #
@@ -13,7 +12,7 @@
 #
 # Install with this command (from your Linux machine):
 #
-# curl -sSL pi-hole.sh | bash
+# curl -sSL https://raw.githubusercontent.com/mrahmadt/netControl/master/install.sh | bash
 
 # -e option instructs bash to immediately exit if any command [1] has a non-zero exit status
 # We do not want users to end up with a partially working install, so we exit the script
