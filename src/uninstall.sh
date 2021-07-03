@@ -119,10 +119,10 @@ bootSetup(){
             echo '' >> /etc/rc.local
             chmod 755  /etc/rc.local
         fi
-        echo "${INSTALL_DIR}/boot.sh &" >> /etc/rc.local
+        echo "${INSTALL_DIR}/scripts/boot.sh &" >> /etc/rc.local
     fi
     
-    ${INSTALL_DIR}/boot.sh
+    ${INSTALL_DIR}/scripts/boot.sh
 
 }
 
@@ -809,8 +809,8 @@ if [ -d "${INSTALL_DIR}" ]; then
         rm -rf /etc/lighttpd/netcontrol.conf
         sed -i -e 's/^.*netcontrol.*$//g' /etc/lighttpd/external.conf
         sed -i -e 's/^.*netControl.*$//g' /etc/rc.local
-        rm -rf ${INSTALL_DIR}
         cd /root/
+        rm -rf ${INSTALL_DIR}
     else
         exit
     fi
