@@ -1,0 +1,22 @@
+if [ -d "${INSTALL_DIR}" ]; then
+    printf "  %b Would you like to remove netControl? (Y/N) [N]\\n" "${INFO}"
+    read -p " " -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        printf "  %b Coping database to root\\n" "${INFO}"
+        cp ${INSTALL_DIR}/etc/home.sqlite3 /root/
+
+        printf "%b  %b Removing netControl\\n" "${OVER}"  "${TICK}"
+        rm -rf /var/www/html/netcontrol-admin
+        rm -rf /etc/sudoers.d/netcontrol
+        rm -rf /etc/cron.d/netcontrol
+        rm -rf /etc/lighttpd/netcontrol.conf
+        sed -i -e 's/^.*netcontrol.*$//g' /etc/lighttpd/external.conf
+        rm -rf ${INSTALL_DIR}
+    else
+        exit
+    fi
+else
+    echo "netControl not found!"
+    exit
+fi
+

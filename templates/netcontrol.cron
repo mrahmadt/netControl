@@ -1,0 +1,3 @@
+
+PATH="$PATH:/usr/sbin:/usr/local/bin/:/usr/bin:/etc/netControl/scripts/:/etc/netControl/scripts/include/"
+* * * * * root /etc/netControl/scripts/minutely.sh

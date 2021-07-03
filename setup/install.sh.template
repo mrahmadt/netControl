@@ -1,0 +1,80 @@
+####################################
+######## Pre Installation ##########
+####################################
+
+#Validate Basic requirements
+isAlreadyInstalled
+
+#Validate Basic Services
+validateBasicServices
+
+#Check for supported distribution
+distro_check
+
+# Start the installer
+# Notify user of package availability
+notify_package_updates_available
+
+# Install packages used by this installation script
+install_dependent_packages "${INSTALLER_DEPS[@]}"
+
+# Check if SELinux is Enforcing
+checkSelinux
+
+####################################
+######## Installation ##############
+####################################
+
+# Display welcome dialogs
+welcomeDialogs
+
+#DNS Service
+getDNSService
+
+#WAN Information
+findWANInformation
+
+#LAN Information
+findLanInformation
+
+######## LAN Information #########
+if whiptail --backtitle "Confirmation" --title "Confirmation" --yesno "Are these settings correct?
+
+
+            Internet (WAN) Interface: ${WAN_INTERFACE}
+            Internet (WAN) IP:        ${WAN_ADDRESS}
+            LAN Interface:            ${LAN_INTERFACE}
+            LAN IP:                   ${LAN_ADDRESS}
+            DNS Server:               ${DNS_SERVER_IP}
+            
+" "${r}" "${c}"; then
+
+    # Install the Core dependencies
+    printf "  %b Install the Core dependencies\\n" "${INFO}"
+    install_dependent_packages "${APP_DEPS[@]}"
+
+    printf "  %b Cloning netControl\\n" "${INFO}"
+    rm -rf ${TMP_DIR}
+    cd /tmp
+    git clone ${netControlGitUrl} netControl
+
+    printf "  %b Create directory for netControl\\n" "${INFO}"
+    rm -rf "${INSTALL_DIR}"
+    mv netControl/src ${INSTALL_DIR}
+
+    ouiDatabase
+    databaseSetup
+
+    printf "  %b netControl permission\\n" "${INFO}"
+    chmod -R 755 ${INSTALL_DIR}
+    sudoerSetup
+    cronSetup
+    lighttpdSetup
+    enable_service lighttpd
+    restart_service lighttpd
+    bootSetup
+
+    # all scripts needs to run as root
+
+fi
+
