@@ -810,7 +810,7 @@ if [ -d "${INSTALL_DIR}" ]; then
         sed -i -e 's/^.*netcontrol.*$//g' /etc/lighttpd/external.conf
         sed -i -e 's/^.*netControl.*$//g' /etc/rc.local
         rm -rf ${INSTALL_DIR}
-        cd ~
+        cd /root/
     else
         exit
     fi
