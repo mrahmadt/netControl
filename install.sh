@@ -864,8 +864,11 @@ if whiptail --backtitle "Confirmation" --title "Confirmation" --yesno "Are these
 
     printf "  %b netControl permission\\n" "${INFO}"
     chmod -R 755 ${INSTALL_DIR}
+    chown -R ${LIGHTTPD_USER}:${LIGHTTPD_GROUP} ${INSTALL_DIR}
     sudoerSetup
     cronSetup
+
+
     lighttpdSetup
     enable_service lighttpd
     restart_service lighttpd

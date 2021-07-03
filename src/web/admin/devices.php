@@ -273,6 +273,7 @@ require_once 'html/footer.php';
 
 function saveDeviceForm($data){
   global $dblink, $weekDays;
+
   $schedule = false;
   $sqlValues = [
     ':id'=>$data['id'],
