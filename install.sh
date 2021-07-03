@@ -121,6 +121,8 @@ bootSetup(){
         fi
         echo "${INSTALL_DIR}/boot.sh &" >> /etc/rc.local
     fi
+    
+    ${INSTALL_DIR}/boot.sh
 
 }
 
@@ -870,10 +872,16 @@ if whiptail --backtitle "Confirmation" --title "Confirmation" --yesno "Are these
     bootSetup
 
     echo ""
+    echo ""
+    echo ""
+    echo ""
     echo "Congratulation!. netControl installation completed successfully."
     echo "Go to http://${WAN_ADDRESS}/netcontrol-admin to access NetControl Admin page"
     echo "Username: admin"
     echo "Password: enter a new password and it will be saved for future use!"
+    echo ""
+    echo ""
+    echo ""
     echo ""
 fi
 

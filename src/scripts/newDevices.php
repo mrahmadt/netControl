@@ -21,6 +21,7 @@ foreach($out as $line){
     $bandwidth = ($config['device.new.bandwidth'] !='') ? $config['device.new.bandwidth'] : null;
     $mode = $config['device.new.mode'];
     $hostname = ($line[1] != '?') ? $line[1] : null;
+    $name = ($line[1] != '?') ? $line[1] : 'Unknown';
 
     $device = [
         'macaddr' => $macaddr,

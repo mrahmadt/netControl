@@ -121,6 +121,8 @@ bootSetup(){
         fi
         echo "${INSTALL_DIR}/boot.sh &" >> /etc/rc.local
     fi
+    
+    ${INSTALL_DIR}/boot.sh
 
 }
 
