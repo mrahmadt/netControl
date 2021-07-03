@@ -119,10 +119,10 @@ bootSetup(){
             echo '' >> /etc/rc.local
             chmod 755  /etc/rc.local
         fi
-        echo "${INSTALL_DIR}/boot.sh &" >> /etc/rc.local
+        echo "${INSTALL_DIR}/scripts/boot.sh &" >> /etc/rc.local
     fi
     
-    ${INSTALL_DIR}/boot.sh
+    ${INSTALL_DIR}/scripts/boot.sh
 
 }
 
