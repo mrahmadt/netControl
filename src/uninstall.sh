@@ -360,15 +360,6 @@ isAlreadyInstalled(){
     fi
 }
 
-confirmContinue(){
-    read -p "${1} is required, would you like to continue anyway? (Y/N) [N] " -n 1 -r
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-        printf "\\n  %b %s ... continue.\\n" "${INFO}" "${1}" 
-    else
-        exit 1
-    fi
-}
 
 # SELinux
 checkSelinux() {
@@ -461,7 +452,6 @@ validateBasicServices(){
         printf "  %b %s\\n" "${TICK}" "${str}"
     else
         printf "%b  %b %s not found\\n" "${OVER}" "${CROSS}" "${str}"
-        confirmContinue "${str}"
     fi
 
     str="Pi Hole Service"
