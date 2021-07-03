@@ -28,7 +28,7 @@ if (isset($_GET['id'])){
   }elseif($device['mode'] == 4){
     setDevices($device['id'], 4, $device['macaddr'], null, null, $device['requireLogin']);
   }
-  @header('Location: /devices.php?id='.$id . '&t='.time());
+  @header('Location: /netcontrol-admin/devices.php?id='.$id . '&t='.time());
   exit;
 }
 
