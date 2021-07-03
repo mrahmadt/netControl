@@ -73,5 +73,8 @@ if whiptail --backtitle "Confirmation" --title "Confirmation" --yesno "Are these
     enable_service lighttpd
     restart_service lighttpd
     bootSetup
+
+    echo ""
+    echo ""
 fi
 

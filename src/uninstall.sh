@@ -145,7 +145,7 @@ lighttpdSetup(){
     # Make sure the external.conf file exists, as lighttpd v1.4.50 crashes without it
     touch /etc/lighttpd/external.conf
     chmod 644 /etc/lighttpd/external.conf
-    includeConf=$(grep -c "netcontrol" /etc/lighttpd/external.conf 2>/dev/null | wc -l)
+    includeConf=$(grep "netcontrol" /etc/lighttpd/external.conf 2>/dev/null | wc -l)
     if [ "${includeConf}" -eq "0" ]; then
         echo 'include_shell "cat netcontrol.conf 2>/dev/null"' >> /etc/lighttpd/external.conf
     fi
@@ -806,7 +806,9 @@ if [ -d "${INSTALL_DIR}" ]; then
         rm -rf /etc/cron.d/netcontrol
         rm -rf /etc/lighttpd/netcontrol.conf
         sed -i -e 's/^.*netcontrol.*$//g' /etc/lighttpd/external.conf
+        sed -i -e 's/^.*netControl.*$//g' /etc/rc.local
         rm -rf ${INSTALL_DIR}
+        cd ~
     else
         exit
     fi
