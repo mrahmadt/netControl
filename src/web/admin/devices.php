@@ -278,8 +278,8 @@ function saveDeviceForm($data){
   $sqlValues = [
     ':id'=>$data['id'],
     ':name'=>$data['name'],
-    ':user_id'=>$data['user_id'],
-    ':deviceType_id'=>$data['deviceType_id'],
+    ':user_id'=>($data['user_id']) ? $data['user_id'] : null,
+    ':deviceType_id'=>($data['deviceType_id']) ? $data['deviceType_id'] : null,
     ':mode'=>$data['mode'],
   ];
   $sqlValuesExtra = [];
