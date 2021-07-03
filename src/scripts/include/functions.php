@@ -19,7 +19,7 @@ function getStatusMode($device_id,$macaddr){
 
 function execCmd($cmd){
     ob_start();
-    passthru($cmd);
+    passthru('sudo ' . $cmd);
     $var = ob_get_contents();
     ob_end_clean(); //Use this instead of ob_flush()
     return trim($var);

@@ -73,8 +73,5 @@ if whiptail --backtitle "Confirmation" --title "Confirmation" --yesno "Are these
     enable_service lighttpd
     restart_service lighttpd
     bootSetup
-
-    # all scripts needs to run as root
-
 fi
 
