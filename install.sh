@@ -122,7 +122,7 @@ bootSetup(){
         echo "${INSTALL_DIR}/scripts/boot.sh &" >> /etc/rc.local
     fi
     
-    ${INSTALL_DIR}/scripts/boot.sh
+    ${INSTALL_DIR}/scripts/boot.sh >/dev/null 2>&1
 
 }
 

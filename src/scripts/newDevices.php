@@ -27,7 +27,7 @@ foreach($out as $line){
         'macaddr' => $macaddr,
         'ipaddr' => $ipaddr,
         'hostname' => $hostname,
-        'name' => $hostname,
+        'name' => $name,
         'mode' => $mode,
         'bandwidth' => $bandwidth,
         'created_at' => time(),
