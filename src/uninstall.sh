@@ -112,7 +112,7 @@ cronSetup() {
 }
 bootSetup(){
     printf "\\n  %b Enabling service auto restart..." "${INFO}"
-    includeConf=$(grep -c "netControl" /etc/rc.local 2>/dev/null | wc -l)
+    includeConf=$(grep "netControl" /etc/rc.local 2>/dev/null | wc -l)
     if [ "${includeConf}" -eq "0" ]; then
         if [[ ! -f "/etc/rc.local" ]]; then
             echo '#!/bin/bash' >> /etc/rc.local

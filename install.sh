@@ -112,7 +112,7 @@ cronSetup() {
 }
 bootSetup(){
     printf "\\n  %b Enabling service auto restart..." "${INFO}"
-    includeConf=$(grep -c "netControl" /etc/rc.local 2>/dev/null | wc -l)
+    includeConf=$(grep "netControl" /etc/rc.local 2>/dev/null | wc -l)
     if [ "${includeConf}" -eq "0" ]; then
         if [[ ! -f "/etc/rc.local" ]]; then
             echo '#!/bin/bash' >> /etc/rc.local
@@ -870,6 +870,10 @@ if whiptail --backtitle "Confirmation" --title "Confirmation" --yesno "Are these
     bootSetup
 
     echo ""
+    echo "Congratulation!. netControl installation completed successfully."
+    echo "Go to http://${WAN_ADDRESS}/netcontrol-admin to access NetControl Admin page"
+    echo "Username: admin"
+    echo "Password: enter a new password and it will be saved for future use!"
     echo ""
 fi
 
