@@ -55,7 +55,7 @@ SCRIPT_DIR=${INSTALL_DIR}/scripts
 ETC_DIR=${INSTALL_DIR}/etc
 DATABASE_FILE=${ETC_DIR}/home.sqlite3
 REMOVEOLDSETUP=0
-netControlGitUrl="https://github.com/mrahmadt/cosmosdb.git"
+netControlGitUrl="https://github.com/mrahmadt/netControl.git"
 PiHoleInstalled=0
 
 
@@ -347,7 +347,7 @@ findLanInformation(){
 isAlreadyInstalled(){
     if [ -d "${INSTALL_DIR}" ]; then
         printf "  %b netControl already installed...\\n" "${INFO}"
-        read -p "Would you like to remove it? (Y/N) [N] " -n 1 -r
+        read -p "Would you like to remove it? (Y/N) [N] " -n 3 -r
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             printf "%b  %b Removing netControl\\n" "${OVER}"  "${TICK}"
             REMOVEOLDSETUP=1

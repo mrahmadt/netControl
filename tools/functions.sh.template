@@ -347,7 +347,7 @@ findLanInformation(){
 isAlreadyInstalled(){
     if [ -d "${INSTALL_DIR}" ]; then
         printf "  %b netControl already installed...\\n" "${INFO}"
-        read -p "Would you like to remove it? (Y/N) [N] " -n 1 -r
+        read -p "Would you like to remove it? (Y/N) [N] " -n 3 -r
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             printf "%b  %b Removing netControl\\n" "${OVER}"  "${TICK}"
             REMOVEOLDSETUP=1
