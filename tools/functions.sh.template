@@ -55,7 +55,7 @@ SCRIPT_DIR=${INSTALL_DIR}/scripts
 ETC_DIR=${INSTALL_DIR}/etc
 DATABASE_FILE=${ETC_DIR}/home.sqlite3
 REMOVEOLDSETUP=0
-netControlGitUrl="https://github.com/mrahmadt/cosmosdb.git"
+netControlGitUrl="https://github.com/mrahmadt/netControl.git"
 PiHoleInstalled=0
 
 
