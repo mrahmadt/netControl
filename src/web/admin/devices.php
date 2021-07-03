@@ -104,7 +104,7 @@ $xdata = [
 ?>
     <div class="p-4 mb-6 bg-white shadow rounded "
       x-data="{ <?php echo implode(',', $xdata);?> }">
-      <form action="devices.php" method="post">
+      <form action="/netcontrol-admin/devices.php" method="post">
         <input type="hidden" name="id"
           value="<?php echo $_GET['id'];?>">
         <table class="table-auto w-full text-sm">

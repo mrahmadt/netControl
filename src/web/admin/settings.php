@@ -38,7 +38,7 @@ if (isset($_POST['system_status'])) {
 <section class="py-4 px-4">
   <div class="container px-0 mx-auto">
     <div class="p-4 mb-6 bg-white shadow rounded ">
-      <form action="settings.php" method="post">
+      <form action="/netcontrol-admin/settings.php" method="post">
         <table class="text-sm table-auto w-full">
           <tbody>
             <tr class="text-left">

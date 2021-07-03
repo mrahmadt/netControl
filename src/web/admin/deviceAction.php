@@ -46,6 +46,6 @@ if($value == '0'){
 goMainPage();
 
 function goMainPage(){
-    header("Location: index.php");
+    header("Location: /netcontrol-admin/index.php");
     exit;
 }

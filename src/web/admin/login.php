@@ -56,7 +56,7 @@ if(isset($_POST['name']) && isset($_POST['password'])){
                 <div class="border-b py-8 font-bold text-black text-center text-xl tracking-widest uppercase">
                     Welcome back!
                 </div>
-                <form class="bg-grey-600 px-10 py-10" method="post" action="login.php">
+                <form class="bg-grey-600 px-10 py-10" method="post" action="/netcontrol-admin/login.php">
                     <div class="mb-3">
                         <input class="border w-full p-3" name="name" type="text" placeholder="Name" autofocus>
                     </div>

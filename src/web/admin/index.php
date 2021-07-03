@@ -76,8 +76,8 @@ $devices = $sth->fetchAll(PDO::FETCH_ASSOC);
                   }
                 ?>
                   <tr class="text-sm <?php echo $bgColor; ?> text-center">
-                    <td class="py-5 font-medium" title="<?php echo 'Vendor: '.$device['manufacturer'] . "\n" . 'Host: '.$device['hostname']; ?>"><?php if($device['stage']==0){ ?><span class="text-xs rounded-full px-1 py-1 italic font-bold text-white bg-red-500">New</span> <?php } ?><a class="cursor-pointer text-blue-600 hover:underline" href="/devices.php?id=<?php echo $device['id']?>"><?php echo $device['name']; ?></a></td>
-                    <td class="py-5 font-medium"><a class="cursor-pointer text-blue-600 hover:underline" href="users.php?id=<?php echo $device['user_id']; ?>"><?php echo $device['user_name']; ?></a></td>
+                    <td class="py-5 font-medium" title="<?php echo 'Vendor: '.$device['manufacturer'] . "\n" . 'Host: '.$device['hostname']; ?>"><?php if($device['stage']==0){ ?><span class="text-xs rounded-full px-1 py-1 italic font-bold text-white bg-red-500">New</span> <?php } ?><a class="cursor-pointer text-blue-600 hover:underline" href="/netcontrol-admin/devices.php?id=<?php echo $device['id']?>"><?php echo $device['name']; ?></a></td>
+                    <td class="py-5 font-medium"><a class="cursor-pointer text-blue-600 hover:underline" href="/netcontrol-admin/users.php?id=<?php echo $device['user_id']; ?>"><?php echo $device['user_name']; ?></a></td>
                     <td class="py-5 font-medium hidden lg:inline-block"><?php echo $device['TypeName']; ?></td>
                     <td class="py-5 font-medium"><?php echo $status; ?></td>
                     <td class="py-5 font-medium" title="<?php echo $modeTitle; ?>"><?php echo $modeText; if($onlineText){ ?><div class="<?php echo $onlineClass; ?>"><?php echo $onlineText; ?></div><?php } ?></td>
