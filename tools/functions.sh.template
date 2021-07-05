@@ -182,6 +182,8 @@ sudoerSetup(){
     echo "${LIGHTTPD_USER} ALL=NOPASSWD: ${SCRIPT_DIR}/limit_device.sh" >> /etc/sudoers.d/netcontrol
     echo "${LIGHTTPD_USER} ALL=NOPASSWD: /usr/sbin/iptables" >> /etc/sudoers.d/netcontrol
     echo "${LIGHTTPD_USER} ALL=NOPASSWD: /usr/sbin/tc" >> /etc/sudoers.d/netcontrol
+    echo "${LIGHTTPD_USER} ALL=NOPASSWD: /usr/sbin/ip" >> /etc/sudoers.d/netcontrol
+    echo "${LIGHTTPD_USER} ALL=NOPASSWD: /usr/sbin/arp" >> /etc/sudoers.d/netcontrol
     echo "Defaults secure_path = /sbin:/bin:/usr/sbin:/usr/bin:${SCRIPT_DIR}" >> /etc/sudoers.d/netcontrol
     # Set the strict permissions on the file
     chmod 0440 /etc/sudoers.d/netcontrol
