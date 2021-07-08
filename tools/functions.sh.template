@@ -655,8 +655,15 @@ if is_command apt-get ; then
         # should match version with the current PHP version.
         phpVer="php$phpInsMajor.$phpInsMinor"
     fi
-    # We also need the correct version for `php-sqlite` (which differs across distros)
-    if apt-cache show "${phpVer}-sqlite3" > /dev/null 2>&1; then
+
+    # We also need the correct version for `php-json` (built-in php 8)
+    if apt-cache show "${phpVer}-json" > /dev/null 2>&1; then
+        phpJson="${phpVer}-json"
+    else
+        phpJson=""
+    fi
+    
+    if apt-cache show "${phpVer}-json" > /dev/null 2>&1; then
         phpSqlite="sqlite3"
     elif apt-cache show "${phpVer}-sqlite" > /dev/null 2>&1; then
         phpSqlite="sqlite"
@@ -664,10 +671,11 @@ if is_command apt-get ; then
         printf "  %b Aborting installation: No SQLite PHP module was found in APT repository.\\n" "${CROSS}"
         exit 1
     fi
+
     # Packages required to run this install script (stored as an array)
     INSTALLER_DEPS=(git "${iproute_pkg}" whiptail sqlite3 dnsutils)
     # Packages required to run netControl (stored as an array)
-    APP_DEPS=(netcat psmisc sqlite3 cron iputils-ping lsof curl unzip lighttpd php-common php-sqlite3 iptables iproute2 conntrack dnsutils sudo wget idn2 libcap2-bin dns-root-data libcap2 "${phpVer}-common" "${phpVer}-cgi" "${phpVer}-${phpSqlite}" "${phpVer}-xml" "${phpVer}-json" "${phpVer}-intl")
+    APP_DEPS=(netcat psmisc sqlite3 cron iputils-ping lsof curl unzip lighttpd php-common php-sqlite3 iptables iproute2 conntrack dnsutils sudo wget idn2 libcap2-bin dns-root-data libcap2 "${phpVer}-common" "${phpVer}-cgi" "${phpVer}-${phpSqlite}" "${phpVer}-xml" "${phpJson}" "${phpVer}-intl")
 
     # The Web server user,
     LIGHTTPD_USER="www-data"
