@@ -657,7 +657,7 @@ if is_command apt-get ; then
     fi
 
     # We also need the correct version for `php-json` (built-in php 8)
-    if apt-cache show "${phpVer}-json" > /dev/null 2>&1; then
+    if [[ "$phpInsMajor" != "8" ]]; then
         phpJson="${phpVer}-json"
     else
         phpJson=""
