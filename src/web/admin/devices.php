@@ -28,7 +28,11 @@ if (isset($_GET['id'])){
   }elseif($device['mode'] == 4){
     setDevices($device['id'], 4, $device['macaddr'], null, null, $device['requireLogin']);
   }
-  @header('Location: /netcontrol-admin/devices.php?id='.$id . '&t='.time());
+  $dblink->exec('UPDATE devices SET stage=2 WHERE id=' . $device['id']);
+
+  // @header('Location: /netcontrol-admin/devices.php?id='.$id . '&t='.time());
+  @header('Location: /netcontrol-admin/index.php?t='.time());
+
   exit;
 }
 
@@ -128,7 +132,7 @@ $xdata = [
                 } elseif ($row['name'] == 'requireLogin') {
                     ?>
 <div><input x-model="requireLogin" type="radio" class="shadow" <?php if ($device['requireLogin'] == 1) {?> checked="checked" <?php } ?> id="status1" name="requireLogin" value=1> <label for="status1">Yes</label></div>
-<div><input x-model="requireLogin" type="radio" class="shadow" <?php if ($device['requireLogin'] == 0) {?> checked="checked" <?php } ?> id="status0" name="requireLogin" value=2> <label for="status0">No</label></div>
+<div><input x-model="requireLogin" type="radio" class="shadow" <?php if ($device['requireLogin'] == 0) {?> checked="checked" <?php } ?> id="status0" name="requireLogin" value=0> <label for="status0">No</label></div>
 <?php
                 } elseif (in_array($row['name'], ['MonCredit','TueCredit','WedCredit','ThuCredit','FriCredit','SatCredit','SunCredit'])) {
                     ?>
@@ -252,13 +256,6 @@ $xdata = [
               </td>
             </tr>
           </tbody>
-          <!-- mode
-
-
-stage
-
-schedule
--->
         </table>
         <div x-cloak class="py-5 text-center"><input type="submit"
             class="px-5 py-2 mx-auto bg-blue-500 hover:bg-blue-600 cursor-pointer text-lg font-bold text-white shadow-md rounded-full"
@@ -281,9 +278,10 @@ function saveDeviceForm($data){
     ':user_id'=>($data['user_id']) ? $data['user_id'] : null,
     ':deviceType_id'=>($data['deviceType_id']) ? $data['deviceType_id'] : null,
     ':mode'=>$data['mode'],
+    ':stage'=>2,
   ];
   $sqlValuesExtra = [];
-  $sql = 'UPDATE devices SET stage=1,name=:name,user_id=:user_id,deviceType_id=:deviceType_id,mode=:mode %extraSets% WHERE id=:id';
+  $sql = 'UPDATE devices SET stage=:stage,name=:name,user_id=:user_id,deviceType_id=:deviceType_id,mode=:mode %extraSets% WHERE id=:id';
 
   if($data['mode']==1){ //Allow
   }elseif($data['mode']==2){ //Block

@@ -4,7 +4,7 @@
   define('PAGE_TITLE','Devices');
   require_once 'html/header.php';
   require_once 'html/menu.php';
-
+//TODO: option to hide some devices
 
 $bandwidths = getBandwidths();
 $sth = $dblink->prepare('SELECT devices.*,users.name as user_name,deviceTypes.name as TypeName FROM devices LEFT JOIN users ON (users.id=devices.user_id) LEFT JOIN deviceTypes ON (deviceTypes.id=devices.deviceType_id)');
@@ -13,14 +13,20 @@ $devices = $sth->fetchAll(PDO::FETCH_ASSOC);
 ?>
       <section class="py-4 px-4">
         <div class="container px-0 mx-auto">
+        <?php
+if($config['system.status'] == '0'){
+?>
+<div class="bg-red-500 text-white text-center py-2 mb-4">netConnect is disabled!, go to settings to enable it,</div>
+<?php } ?>
+
           <div class="p-4 mb-6 bg-white shadow rounded ">
             <table class="table-auto w-full">
               <thead>
                 <tr class="text-sm text-gray-500 text-center">
+                  <th class="pb-3 font-medium"></th>
                   <th class="pb-3 font-medium">Device</th>
                   <th class="pb-3 font-medium">User</th>
                   <th class="pb-3 font-medium hidden lg:inline-block">Type</th>
-                  <th class="pb-3 font-medium">Status</th>
                   <th class="pb-3 font-medium">Mode</th>
                   <th class="pb-3 font-medium hidden md:inline-block">Last Seen</th>
                   <th class="pb-3 font-medium">Action</th>
@@ -66,24 +72,28 @@ $devices = $sth->fetchAll(PDO::FETCH_ASSOC);
                     }
                     
                   }
+                  $statusBgColor='bg-gray-500';
                   $status = getStatusMode($device['id'],$device['macaddr']);
                   if ($status==2) {
                     $status = 'Blocked';
+                    $statusBgColor='bg-red-500';
                   }elseif ($status==3) {
                     $status = 'Limited';
+                    $statusBgColor='bg-yellow-500';
                   }else{
                     $status = 'Allowed';
+                    $statusBgColor='bg-green-500';
                   }
                 ?>
                   <tr class="text-sm <?php echo $bgColor; ?> text-center">
-                    <td class="py-5 font-medium" title="<?php echo 'Vendor: '.$device['manufacturer'] . "\n" . 'Host: '.$device['hostname']; ?>"><?php if($device['stage']==0){ ?><span class="text-xs rounded-full px-1 py-1 italic font-bold text-white bg-red-500">New</span> <?php } ?><a class="cursor-pointer text-blue-600 hover:underline" href="/netcontrol-admin/devices.php?id=<?php echo $device['id']?>"><?php echo $device['name']; ?></a></td>
+                    <td class="<?php echo $statusBgColor; ?> w-2" title="<?php echo $status; ?>"> </td>
+                    <td class="py-5 font-medium" title="<?php echo 'Vendor: '.$device['manufacturer'] . "\n" . 'Host: '.$device['hostname']; ?>"><?php if($device['stage']<=1){ ?><span class="text-xs rounded-full px-1 py-1 italic font-bold text-white bg-red-500">New</span> <?php } ?><a class="cursor-pointer text-blue-600 hover:underline" href="/netcontrol-admin/devices.php?id=<?php echo $device['id']?>"><?php echo $device['name']; ?></a></td>
                     <td class="py-5 font-medium"><a class="cursor-pointer text-blue-600 hover:underline" href="/netcontrol-admin/users.php?id=<?php echo $device['user_id']; ?>"><?php echo $device['user_name']; ?></a></td>
                     <td class="py-5 font-medium hidden lg:inline-block"><?php echo $device['TypeName']; ?></td>
-                    <td class="py-5 font-medium"><?php echo $status; ?></td>
                     <td class="py-5 font-medium" title="<?php echo $modeTitle; ?>"><?php echo $modeText; if($onlineText){ ?><div class="<?php echo $onlineClass; ?>"><?php echo $onlineText; ?></div><?php } ?></td>
                     <td class="py-5 font-medium hidden md:inline-block" title="First Seen <?php echo timeAgo($device['created_at']); ?>"><?php echo timeAgo($device['updated_at']); ?></td>
                     <td>
-                      <select onChange="window.document.location.href='deviceAction.php?id=<?php echo $device['id']; ?>&action='+this.options[this.selectedIndex].value;" name="action" class="border shadow">
+                      <select onChange="window.document.location.href='deviceAction.php?id=<?php echo $device['id']; ?>&action='+this.options[this.selectedIndex].value;" name="action" class="w-5 md:w-full border shadow">
                         <option value="">-</option>
                         <optgroup label="Mode">
                           <option value="allow:0">Set to Allow</option>
@@ -100,6 +110,9 @@ $devices = $sth->fetchAll(PDO::FETCH_ASSOC);
                           <option value="block:15">Block for 15 minutes</option>
                           <option value="block:30">Block for 30 minutes</option>
                           <option value="block:60">Block for 1 hour</option>
+                        </optgroup>
+                        <optgroup label="Actions">
+                          <option value="delete:d">Delete device</option>
                         </optgroup>
                       </select>
                     </td>

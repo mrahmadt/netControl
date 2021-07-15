@@ -83,7 +83,7 @@ is_command() {
 }
 ouiDatabase(){
     printf "  %b Downloading OUI file\\n" "${INFO}"
-    wget http://standards-oui.ieee.org/oui/oui.txt -o ${INSTALL_DIR}/etc/out.txt
+    wget http://standards-oui.ieee.org/oui/oui.txt -O ${INSTALL_DIR}/etc/oui.txt -o /dev/null
 }
 
 databaseSetup(){

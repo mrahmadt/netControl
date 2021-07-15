@@ -42,7 +42,7 @@ if (isset($_POST['system_status'])) {
         <table class="text-sm table-auto w-full">
           <tbody>
             <tr class="text-left">
-              <td class="p-4">Enable/Disable System</td>
+              <td class="p-4">Enable netControl</td>
               <td>
                 <div><input type="radio" class="shadow" <?php if ($config['system.status'] == 1) {?>
                   checked="checked" <?php }?> id="status1"

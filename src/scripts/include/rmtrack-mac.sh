@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 MACADDR="$1"
-# echo "rmtrack-mac ${MACADDR}";
+echo "rmtrack-mac ${MACADDR}";
 IPADDR=$(arp -an | grep -v incomplete | grep -v 'arp:'|  grep ${MACADDR} | awk '{print $2}' | sed 's/[()]//g')
 
 if [[ -n "$IPADDR" ]]; then
-# echo "IP Address: $IPADDR"
+echo "IP Address: $IPADDR"
 /usr/sbin/conntrack -L \
   |grep $IPADDR \
   |grep ESTAB \

@@ -18,7 +18,7 @@ if(!$device) goMainPage();
 
 
 if($value == '0'){
-    $stmt = $dblink->prepare('UPDATE devices SET stage=1,mode=:mode WHERE id=:id');
+    $stmt = $dblink->prepare('UPDATE devices SET stage=2,mode=:mode WHERE id=:id');
     if($action == 'allow'){
         $stmt->execute(['id'=>$id,'mode'=>1]);
         setDevices($device['id'], 1, $device['macaddr']);
@@ -40,6 +40,9 @@ if($value == '0'){
     }elseif($action == 'block'){
         setDevices($device['id'], 2, $device['macaddr']);
         setTemporaryMode($id, $value);
+    }elseif($action == 'delete'){
+        $sth = $dblink->prepare('DELETE FROM devices WHERE id=:id');
+        $sth->execute(array(':id' =>  $device['id']));
     }
 }
 

@@ -3,12 +3,16 @@
 $iptables_mangle_output = null;
 
 function getStatusMode($device_id,$macaddr){
-    global $iptables_mangle_output;
-    if($iptables_mangle_output==null) $iptables_mangle_output = execCmd("iptables -L -t mangle");
+    global $iptables_mangle_output,$config;
+    if($config['system.status'] == '0') return 1;
+    if ($iptables_mangle_output==null) {
+        $iptables_mangle_output = execCmd("iptables -L -t mangle");
+    }
+
     if (stripos($iptables_mangle_output, $macaddr) === false) {
         return 2;
     }else{
-        $cmdOutput = execCmd("tc filter show dev enp0s8 | grep '800::$device_id '");
+        $cmdOutput = execCmd("tc filter show dev ".$config['lan.interface']." | grep '800::$device_id '");
         if($cmdOutput==''){
             return 1;
         }else{
@@ -132,9 +136,9 @@ function setDevices($id, $mode, $macaddr = null, $bandwidth = null, $scheduleMod
     $cmdline = implode(' ',$cmd);
     if($cmd) $output = execCmd($cmdline);
     if($doLogin == 1){
-        $sql = 'UPDATE devices SET stage=1, Is_loggedIn=1 WHERE device_id=' . $id;
+        $sql = 'UPDATE devices SET Is_loggedIn=1 WHERE id=' . $id;
     }else{
-        $sql = 'UPDATE devices SET stage=1, Is_loggedIn=0 WHERE device_id=' . $id;
+        $sql = 'UPDATE devices SET Is_loggedIn=0 WHERE id=' . $id;
     }
     $dblink->exec($sql);
 }
