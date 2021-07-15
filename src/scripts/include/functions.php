@@ -143,6 +143,11 @@ function setDevices($id, $mode, $macaddr = null, $bandwidth = null, $scheduleMod
     $dblink->exec($sql);
 }
 
+function oldDate($time_ago){
+    $time  = time() - $time_ago;
+    return $time >= 604800 && $time < 2600640; //weeks
+}
+
 function timeAgo($time_ago) {
     $time  = time() - $time_ago;
     switch($time):

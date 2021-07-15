@@ -7,7 +7,7 @@
 //TODO: option to hide some devices
 
 $bandwidths = getBandwidths();
-$sth = $dblink->prepare('SELECT devices.*,users.name as user_name,deviceTypes.name as TypeName FROM devices LEFT JOIN users ON (users.id=devices.user_id) LEFT JOIN deviceTypes ON (deviceTypes.id=devices.deviceType_id)');
+$sth = $dblink->prepare('SELECT devices.*,users.name as user_name,deviceTypes.name as TypeName FROM devices LEFT JOIN users ON (users.id=devices.user_id) LEFT JOIN deviceTypes ON (deviceTypes.id=devices.deviceType_id) ORDER BY updated_at DESC');
 $sth->execute();
 $devices = $sth->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -91,7 +91,7 @@ if($config['system.status'] == '0'){
                     <td class="py-5 font-medium"><a class="cursor-pointer text-blue-600 hover:underline" href="/netcontrol-admin/users.php?id=<?php echo $device['user_id']; ?>"><?php echo $device['user_name']; ?></a></td>
                     <td class="py-5 font-medium hidden lg:inline-block"><?php echo $device['TypeName']; ?></td>
                     <td class="py-5 font-medium" title="<?php echo $modeTitle; ?>"><?php echo $modeText; if($onlineText){ ?><div class="<?php echo $onlineClass; ?>"><?php echo $onlineText; ?></div><?php } ?></td>
-                    <td class="py-5 font-medium hidden md:inline-block" title="First Seen <?php echo timeAgo($device['created_at']); ?>"><?php echo timeAgo($device['updated_at']); ?></td>
+                    <td class="py-5 font-medium hidden md:inline-block <?php if(oldDate($device['updated_at'])){ ?> text-red-700 <?php } ?>" title="First Seen <?php echo timeAgo($device['created_at']); ?>"><?php echo timeAgo($device['updated_at']); ?></td>
                     <td>
                       <select onChange="window.document.location.href='deviceAction.php?id=<?php echo $device['id']; ?>&action='+this.options[this.selectedIndex].value;" name="action" class="w-5 md:w-full border shadow">
                         <option value="">-</option>
