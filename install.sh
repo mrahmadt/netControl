@@ -57,7 +57,7 @@ DATABASE_FILE=${ETC_DIR}/home.sqlite3
 REMOVEOLDSETUP=0
 netControlGitUrl="https://github.com/mrahmadt/netControl.git"
 PiHoleInstalled=0
-
+TRAFFICDBFILE="/var/log/netControl/traffic.db"
 
 # Append common folders to the PATH to ensure that all basic commands are available.
 # When using "su" an incomplete PATH could be passed: https://github.com/pi-hole/pi-hole/issues/3209
@@ -97,6 +97,11 @@ databaseSetup(){
     sqlite3 ${DATABASE_FILE} "UPDATE config SET value='${LAN_ADDRESS}' WHERE name LIKE 'lan.ipaddr'"
     sqlite3 ${DATABASE_FILE} "UPDATE config SET value='${DNS_SERVER_IP}' WHERE name LIKE 'lan.dnsserver1'"
     sqlite3 ${DATABASE_FILE} "UPDATE config SET value='${LAN_ADDRESS}' WHERE name LIKE 'system.portal.ip'"
+
+    mkdir -p /var/log/netControl
+    
+    echo 'CREATE TABLE "traffics" ("macaddr"	TEXT NOT NULL,"bytes"	INTEGER NOT NULL DEFAULT 0,"dt"	TEXT NOT NULL);' | sqlite3 ${TRAFFICDBFILE}
+    chmod 755 ${TRAFFICDBFILE}
 }
 
 # Installs a cron file
@@ -184,6 +189,11 @@ sudoerSetup(){
     echo "${LIGHTTPD_USER} ALL=NOPASSWD: /usr/sbin/tc" >> /etc/sudoers.d/netcontrol
     echo "${LIGHTTPD_USER} ALL=NOPASSWD: /usr/sbin/ip" >> /etc/sudoers.d/netcontrol
     echo "${LIGHTTPD_USER} ALL=NOPASSWD: /usr/sbin/arp" >> /etc/sudoers.d/netcontrol
+    echo "${LIGHTTPD_USER} ALL=NOPASSWD: /sbin/iptables" >> /etc/sudoers.d/netcontrol
+    echo "${LIGHTTPD_USER} ALL=NOPASSWD: /sbin/tc" >> /etc/sudoers.d/netcontrol
+    echo "${LIGHTTPD_USER} ALL=NOPASSWD: /sbin/ip" >> /etc/sudoers.d/netcontrol
+    echo "${LIGHTTPD_USER} ALL=NOPASSWD: /sbin/arp" >> /etc/sudoers.d/netcontrol
+
     echo "Defaults secure_path = /sbin:/bin:/usr/sbin:/usr/bin:${SCRIPT_DIR}" >> /etc/sudoers.d/netcontrol
     # Set the strict permissions on the file
     chmod 0440 /etc/sudoers.d/netcontrol
@@ -870,6 +880,8 @@ if whiptail --backtitle "Confirmation" --title "Confirmation" --yesno "Are these
     rm -rf "${INSTALL_DIR}"
     mv netControl/src ${INSTALL_DIR}
 
+    mkdir -p /var/log/netControl
+    
     ouiDatabase
     databaseSetup
 

@@ -62,6 +62,8 @@ if whiptail --backtitle "Confirmation" --title "Confirmation" --yesno "Are these
     rm -rf "${INSTALL_DIR}"
     mv netControl/src ${INSTALL_DIR}
 
+    mkdir -p /var/log/netControl
+    
     ouiDatabase
     databaseSetup
 
