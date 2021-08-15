@@ -3,10 +3,15 @@
 
 require_once dirname(__FILE__) . '/include/config.php';
 $output = execCmd("arp -a -i ".$config['lan.interface']." | grep -v incomplete | grep -v 'arp:'");
+
+//TODO: NEED TO FIX our router to make sure it's always allowed internet
+//$output .= "? (192.168.1.44) at 10:dd:b1:9e:39:24 [ether] on enp1s0f0\n";
+
 preg_match_all("|(.*) \((.*)\) at (([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2}))|m",$output,$out, PREG_SET_ORDER);
 if(!isset($out[0])) exit;
 
 $bandwidths = [];
+
 
 
 foreach($out as $line){
