@@ -2,7 +2,6 @@
 // Description: Track the credit consumption/reset
 
 require_once dirname(__FILE__) . '/include/config.php';
-
 $timeNow = (int)date('Gi');
 
 
