@@ -12,7 +12,8 @@ source $SCRIPT_DIR/include/scratch.sh
 # Redirect to web portal
 
 iptables -t mangle -N internet
-iptables -t mangle -A PREROUTING -p tcp --dport 80:50000 -j internet
+iptables -t mangle -A PREROUTING -p tcp --dport 1:50000 -j internet
+iptables -t mangle -A PREROUTING -p udp --dport 1:50000 -j internet
 iptables -t mangle -A internet -j MARK --set-mark 99
 iptables -t nat -A PREROUTING -p tcp -m mark --mark 99 -j DNAT --to-destination ${PORTAL_IP}
 
